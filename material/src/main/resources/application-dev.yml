@@ -1,0 +1,78 @@
+server:
+  port: 19888
+  #servlet:
+    #此处需要和前端配置一样，建议配置  /api
+    #context-path:
+  tomcat:
+    basedir: /usr/local/dangjian/webbase
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/crledu_web_material?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=true&useTimezone=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+    username: root
+    password: 123456
+  redis:
+    host: 192.168.31.9
+    port: 6379
+    password: fxeducation
+    database: 7
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML5
+    suffix: .html
+    prefix: classpath:/templates/
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #逻辑删除配置
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    refresh: false
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  mapper-locations: classpath:com/cledu/springbootmybatisplus/mapper/xml/*.xml
+logging:
+  level:
+    root: info
+    com.crledu.auto.**.repository.dao: trace
+    org.springframework.security: debug
+  pattern:
+    console: '%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n'
+cas:
+  server:
+    host:
+      url: http://192.168.31.11:8080/cas
+      login_url: ${cas.server.host.url}/login
+      logout_url: ${cas.server.host.url}/logout?service=${app.server.host.url}
+app:
+  server:
+    host:
+      url: http://localhost:8080
+  login:
+    url: /cas/auth
+    success: /login/cas
+    failure: /login/cas
+  logout:
+    url: /logout/cas
+crledu:
+  auto:
+    file:
+      temp: D:\usr\local\temp\upload
+      server: /public/file/download
+      base-path: D:\usr\local\webbase\upload
+      sky-path: D:\usr\local\
+

@@ -1,0 +1,79 @@
+server:
+  port: 19888
+  max-http-header-size: 4048576
+  servlet:
+    context-path: /api
+  tomcat:
+    max-http-post-size: 1000MB  #请求参数长度
+    basedir: E:/usr/local/dcedu/webbase
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 72a422af5636413b7d763a37437247f4a08eb116d242f9dd6ee50218c5bfac88 pass:dcedu123
+    url: jdbc:mysql://localhost:3306/crledu_web_material?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=true&useTimezone=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+    username: root
+    password: 1521041994_ly
+  redis:
+    host: localhost
+    port: 6379
+    password: 1521041994ly
+    database: 8
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    mode: HTML5
+    suffix: .html
+    prefix: classpath:/templates/
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #逻辑删除配置
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    refresh: false
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  mapper-locations: classpath:com/cledu/springbootmybatisplus/mapper/xml/*.xml
+logging:
+  level:
+    root: info
+    com.crledu.auto.**.repository.dao: trace
+    org.springframework.security: debug
+  pattern:
+    console: '%d{yyyy/MM/dd-HH:mm:ss} [%thread] %-5level %logger- %msg%n'
+cas:
+  server:
+    host:
+      url: http://220.166.58.216:32226/cas
+      login_url: ${cas.server.host.url}/login
+      logout_url: ${cas.server.host.url}/logout?service=${app.server.host.url}
+app:
+  server:
+    host:
+      url: http://220.166.58.216:32225
+  login:
+    url: /cas/auth
+    success: /login/cas
+    failure: /login/cas
+  logout:
+    url: /cas/logout
+crledu:
+  auto:
+    file:
+      temp: E:\usr\local\temp\upload
+      server: /public/file/download
+      base-path: E:\usr\local\webbase\upload
+      sky-path: E:\usr\local\
